@@ -1,0 +1,88 @@
+syntax="proto3";
+
+package user;
+
+option go_package="./proto/stub";
+
+import "google/api/annotations.proto";
+
+service UserService{
+    rpc GetUser(GetUserRequest) returns (GetUserResponse){
+       option (google.api.http)={
+           get:"/user/{name}"
+        };
+    }
+
+    rpc CreateUser(CreateUserRequest) returns (CreateUserResponse){
+        option (google.api.http)={
+           post: "/user"
+           body: "user"
+        };
+    }
+
+    rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse){
+        option (google.api.http)={
+           delete: "/user/{name}"
+        };
+    }
+
+    rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse){
+        option (google.api.http)={
+           patch: "/user/{name}"
+           body: "user"
+        };
+    }
+
+    rpc GetUsers(GetUsersRequest) returns (GetUsersResponse){
+        option (google.api.http)={
+           get: "/users"
+        };
+    }
+}
+
+message User{
+    string name=1;
+    int32 age=2;
+    string email=3;
+    int32 phoneNumber=4;
+}
+
+message GetUserRequest{
+    string name =1;
+}
+
+message GetUserResponse{
+    User user=1;
+}
+
+message CreateUserRequest{
+    User user=1;
+}
+
+message CreateUserResponse{
+    User user=1;
+    string insertedId=2;
+}
+
+message GetUsersRequest{}
+
+message GetUsersResponse{
+    repeated User userlist=1;
+}
+
+message DeleteUserRequest{
+    string name=1;
+}
+
+message DeleteUserResponse{
+    int32 count=1;
+}
+
+message UpdateUserRequest{
+    string name=1;
+    User user=2;
+}
+
+message UpdateUserResponse{
+    int32 count=1;
+}
